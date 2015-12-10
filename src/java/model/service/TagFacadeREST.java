@@ -32,7 +32,7 @@ public class TagFacadeREST extends AbstractFacade<Tag> {
     public TagFacadeREST() {
         super(Tag.class);
     }
-
+    
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})

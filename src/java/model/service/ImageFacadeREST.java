@@ -18,6 +18,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import model.Comment;
 import model.Image;
 import model.Tag;
 import model.User;
@@ -80,6 +81,40 @@ public class ImageFacadeREST extends AbstractFacade<Image> {
             }
         }
         return listImage;
+    }
+    
+    @GET
+    @Path("getDesc/{id}")
+    public String getDesc(@PathParam("id") Integer id)   {
+        return super.find(id).getDescription();
+    }
+    
+    @GET
+    @Path("getTag/{id}")
+    public List<Tag> getTag(@PathParam("id") Integer id)   {
+        Image img = super.find(id);
+        List<Tag> listTag = (List<Tag>) img.getTagCollection();
+        return listTag;
+    }
+    
+    @GET
+    @Path("getComment/{id}")
+    public List<Comment> getComment(@PathParam("id") Integer id)    {
+        ArrayList<Comment> listComment = new ArrayList<Comment>();
+        List<Comment> allComments = em.createNamedQuery("Comment.findAll").getResultList();
+        for (Comment cm: allComments)   {
+            if (cm.getIid()== super.find(id))   {
+                listComment.add(cm);
+            }
+        }
+        return listComment;
+    }
+    
+    @GET
+    @Path("getLike/{id}")
+    public int getLike(@PathParam("id") Integer id)    {
+        User user = em.find(User.class, id);
+        return user.getImageCollection1().size();
     }
 
     @PUT

@@ -5,6 +5,54 @@ $(document).on('change', '.btn-file :file', function() {
   input.trigger('fileselect', [numFiles, label]);
 });
 
+$(document).on('click', '.photo-box', function(){
+    var IID = $(this).find('img').attr('iid');
+    //Display the description
+    $.get("http://192.168.56.1:8080/ImageSharing/webresources/model.image/getDesc/"+IID, function (response) {
+        $('#description').html('<p>Description: '+response+'</p>');
+    });      
+    //Display the tags
+    $.get("http://192.168.56.1:8080/ImageSharing/webresources/model.image/getTag/"+IID, function (response) {
+        var data = $.xml2json(response);
+        if (!$.isArray(data.tag))   {
+            data.tag = [data.tag];
+        }
+        $('#tags').empty();
+        $.each(data.tag, function(index,value)  {
+            $('#tags').append(value.tagname+" ");
+        });
+    });
+    
+    //Display the comments
+    $.get("http://192.168.56.1:8080/ImageSharing/webresources/model.image/getComment/"+IID, function (response) {
+        var data = $.xml2json(response);
+        if (!$.isArray(data.comment))   {
+            data.comment = [data.comment];
+        }
+        $('#listComments').empty();
+        $.each(data.comment, function(index,value)  {
+            $('#listComments').append('<li>['+value.uid.uname+']: '+value.cment+'</li>'+'<br>');
+            //console.log(value.cment);
+        });
+    });
+    //Display the likes
+    $.get();
+    
+    $('#submitComment').click(function(){
+        var commentInput = $('#commentInput').val();
+        $.ajax({
+            type: "POST",
+            url: "http://192.168.56.1:8080/ImageSharing/webresources/model.comment/submitComment/"+localStorage.getItem("UID")+"/"+IID+"/"+commentInput,
+            success: function (response) {
+                console.log(response);
+            }
+        });
+        
+    });
+    $('#imagepreview').attr('src', $(this).find('img').attr('src'));
+    $('#imagemodal').modal('show');
+});
+
 $(document).ready(function () {
 
     if (localStorage.getItem("checkUserLogin") == "true") {
@@ -62,6 +110,11 @@ $(document).ready(function () {
 
     });
     
+    $('.photo-box').click(function(){
+        $('#imagepreview').attr('src', 'http://192.168.56.1/test/24_naturephotography48.jpg');
+        $('#imagemodal').modal('show');
+    });
+    
     //Display images
     function displayImages(link) {
         $.get(link, function (xml) {
@@ -74,7 +127,7 @@ $(document).ready(function () {
                 $('#image-feed').append('<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">' +
                         '<div class="photo-box">' +
                         '<div class="image-wrap">' +
-                        '<img class="img-responsive" src="http://192.168.56.1/test/' + value.path + '">' +
+                        '<img class="img-responsive" iid="'+value.iid+'" src="http://192.168.56.1/test/' + value.path + '">' +
                         '<!--                                <div class="likes">309 Likes</div>-->' +
                         '</div>' +
                         '<div class="description">' +
@@ -179,6 +232,17 @@ $(document).ready(function () {
         });
         //console.log(check);
     });
+    
+//    function getDesc(IID)  {
+//        $.ajax({
+//            type: "GET",
+//            url: "http://192.168.56.1:8080/ImageSharing/webresources/model.image/getDesc/" +IID,
+//            dataType: "text",
+//            success: function (response) {
+//                return response;
+//            }
+//        });
+//    }
 
     $("#logOut").click(function () {
         localStorage.removeItem("checkUserLogin");
