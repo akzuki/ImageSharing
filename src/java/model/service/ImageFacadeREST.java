@@ -45,12 +45,27 @@ public class ImageFacadeREST extends AbstractFacade<Image> {
         super.create(entity);
     }
 
+//    @GET
+//    @Path("search/{input}")
+//    @Produces({"application/xml", "application/json"})
+//    public List<Image> searchImage(@PathParam("input") String input) {
+//        User user = (User) em.createNamedQuery("User.findByUname").setParameter("uname", input).getResultList().get(0);
+//        return (List<Image>) user.getImageCollection1();
+//    }
     @GET
     @Path("search/{input}")
     @Produces({"application/xml", "application/json"})
     public List<Image> searchImage(@PathParam("input") String input) {
-        User user = (User) em.createNamedQuery("User.findByUname").setParameter("uname", input).getResultList().get(0);
-        return (List<Image>) user.getImageCollection1();
+        ArrayList<Image> resultList = new ArrayList<Image>();
+        if (em.createNamedQuery("User.findByUname").setParameter("uname", input).getResultList().size() != 0) {
+            User user = (User) em.createNamedQuery("User.findByUname").setParameter("uname", input).getSingleResult();
+            resultList.addAll(user.getImageCollection1());
+        }
+        if (em.createNamedQuery("Tag.findByTagname").setParameter("tagname", input).getResultList().size() != 0) {
+            Tag tag = (Tag) em.createNamedQuery("Tag.findByTagname").setParameter("tagname", input).getSingleResult();
+            resultList.addAll(tag.getImageCollection());
+        }
+        return resultList;
     }
 
     @GET
