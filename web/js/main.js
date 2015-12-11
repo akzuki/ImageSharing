@@ -74,6 +74,10 @@ $(document).ready(function () {
             var data = $.xml2json(xml);
             //console.log(data.image[1].path);
             //$('#image-feed').empty();
+            if (!$.isArray(data.image)) {
+                data.image = [data.image];
+            }
+            $('#image-feed').empty();
             console.log($.isArray(data.image));
             $.each(data.image, function (index, value) {
                 console.log(value.path);
@@ -96,31 +100,7 @@ $(document).ready(function () {
     //Search function
     $('#searchButton').click(function (e) {
         e.preventDefault();
-        $.get("webresources/model.image/search/" + $('#searchInput').val(), function (xml) {
-            var data = $.xml2json(xml);
-            //console.log(data.image[1].path);
-            if (!$.isArray(data.image)) {
-                data.image = [data.image];
-            }
-            $('#image-feed').empty();
-            console.log(xml);
-            $.each(data.image, function (index, value) {
-                console.log(value.path);
-                $('#image-feed').append('<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">' +
-                        '<div class="photo-box">' +
-                        '<div class="image-wrap">' +
-                        '<img class="img-responsive" src="http://192.168.56.1/test/' + value.path + '">' +
-                        '<!--                                <div class="likes">309 Likes</div>-->' +
-                        '</div>' +
-                        '<div class="description">' +
-                        value.description +
-                        ' <div class="date">' + value.itime + '</div>' +
-                        '</div>' +
-                        '  </div>' +
-                        ' </div>');
-                //            console.log("succeeded");
-            });
-        });
+        displayImages("webresources/model.image/search/" + $('#searchInput').val());
     });
 
     $('#workpls2').click(function (e) {
