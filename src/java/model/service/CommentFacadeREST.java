@@ -56,7 +56,7 @@ public class CommentFacadeREST extends AbstractFacade<Comment> {
     @POST
     @Path("submitComment/{uid}/{iid}/{comment}")
     //@Consumes({"application/json"})
-    public void submitComment(@PathParam("uid") Integer uid, @PathParam("iid") Integer iid, @PathParam("comment") String comment)  {
+    public String submitComment(@PathParam("uid") Integer uid, @PathParam("iid") Integer iid, @PathParam("comment") String comment)  {
         Comment cm = new Comment();
         Date date = new Date();
         cm.setCtime(date);
@@ -64,7 +64,9 @@ public class CommentFacadeREST extends AbstractFacade<Comment> {
         cm.setIid(em.find(Image.class, iid));
         cm.setUid(em.find(User.class, uid));
         super.create(cm);
+        return "OK";
     }
+    
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})

@@ -49,73 +49,73 @@ public class ImageFacadeREST extends AbstractFacade<Image> {
     @Path("search/{input}")
     @Produces({"application/xml", "application/json"})
     public List<Image> searchImage(@PathParam("input") String input) {
-        ArrayList<Image> listImage = new ArrayList<Image>();
-        //search by user
         User user = (User) em.createNamedQuery("User.findByUname").setParameter("uname", input).getSingleResult();
-            for (Image img : findAll()) {
-                if (img.getUid() == user) {
-                    listImage.add(img);
-                }
-            }
-        
-        return listImage;
+        return (List<Image>) user.getImageCollection1();
     }
 
     @GET
     @Path("searchByTag/{input}")
+    @Produces({"application/xml", "application/json"})
     public List<Image> searchImageByTag(@PathParam("input") String input) {
-        ArrayList<Image> listImage = new ArrayList<Image>();
+//        ArrayList<Image> listImage = new ArrayList<Image>();
+//        Tag tag = (Tag) em.createNamedQuery("Tag.findByTagname").setParameter("tagname", input).getSingleResult();
+//        for (Image img : findAll()) {
+//            if (img.getTagCollection().contains(tag)) {
+//                listImage.add(img);
+//            }
+//        }
+//        return listImage;
         Tag tag = (Tag) em.createNamedQuery("Tag.findByTagname").setParameter("tagname", input).getSingleResult();
-        for (Image img : findAll()) {
-            if (img.getTagCollection().contains(tag)) {
-                listImage.add(img);
-            }
-        }
-        return listImage;
+        return (List<Image>) tag.getImageCollection();
     }
-    
+
     @GET
     @Path("getDesc/{id}")
-    public String getDesc(@PathParam("id") Integer id)   {
+    @Produces("text/plain")
+    public String getDesc(@PathParam("id") Integer id) {
         return super.find(id).getDescription();
     }
-    
+
     @GET
     @Path("getTag/{id}")
-    public List<Tag> getTag(@PathParam("id") Integer id)   {
+    @Produces({"application/xml", "application/json"})
+    public List<Tag> getTag(@PathParam("id") Integer id) {
         Image img = super.find(id);
         List<Tag> listTag = (List<Tag>) img.getTagCollection();
         return listTag;
     }
-    
+
     @GET
     @Path("getComment/{id}")
-    public List<Comment> getComment(@PathParam("id") Integer id)    {
+    @Produces({"application/xml", "application/json"})
+    public List<Comment> getComment(@PathParam("id") Integer id) {
         ArrayList<Comment> listComment = new ArrayList<Comment>();
         List<Comment> allComments = em.createNamedQuery("Comment.findAll").getResultList();
-        for (Comment cm: allComments)   {
-            if (cm.getIid()== super.find(id))   {
+        for (Comment cm : allComments) {
+            if (cm.getIid() == super.find(id)) {
                 listComment.add(cm);
             }
         }
         return listComment;
     }
-    
+
     @GET
     @Path("getLike/{id}")
-    public int getLike(@PathParam("id") Integer id)    {
-        return super.find(id).getUserCollection().size();
+    @Produces("text/plain")
+    public String getLike(@PathParam("id") Integer id) {
+        return String.valueOf(super.find(id).getUserCollection().size());
     }
-    
+
     @GET
     @Path("getLikeTest/{id}")
-    public List<User> getLikeTest(@PathParam("id") Integer id)    {
+    @Produces({"application/xml", "application/json"})
+    public List<User> getLikeTest(@PathParam("id") Integer id) {
         return (List<User>) super.find(id).getUserCollection();
     }
-    
+
     @POST
     @Path("submitLike/{uid}/{iid}")
-    public void submitLike(@PathParam("uid") Integer uid, @PathParam("iid") Integer iid)    {
+    public void submitLike(@PathParam("uid") Integer uid, @PathParam("iid") Integer iid) {
         super.find(iid).getUserCollection().add(em.find(User.class, uid));
         em.find(User.class, uid).getImageCollection().add(super.find(iid));
     }

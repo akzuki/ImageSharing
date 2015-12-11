@@ -62,7 +62,7 @@ public class Upload extends HttpServlet {
             //Set tag
             String tagInput = request.getParameter("tagInput");
             Tag tag = new Tag();
-            if (em.createNamedQuery("Tag.findByTagname").setParameter("tagname", tagInput).getSingleResult() == null) {
+            if (em.createNamedQuery("Tag.findByTagname").setParameter("tagname", tagInput).getResultList().size() == 0) {
                 tag.setTagname(request.getParameter("tagInput"));
             } else {                
                 tag = (Tag) em.createNamedQuery("Tag.findByTagname").setParameter("tagname", tagInput).getSingleResult();
