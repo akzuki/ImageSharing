@@ -58,15 +58,6 @@ public class ImageFacadeREST extends AbstractFacade<Image> {
                 }
             }
         
-        //search by tag
-//        if (em.createNamedQuery("Tag.findByTagname").setParameter("tagname", input).getSingleResult() != null) {
-//            Tag tag = (Tag) em.createNamedQuery("Tag.findByTagname").setParameter("tagname", input).getSingleResult();
-//            for (Image img : findAll()) {
-//                if (img.getTagCollection().contains(tag)) {
-//                    listImage.add(img);
-//                }
-//            }
-//        }
         return listImage;
     }
 
@@ -113,8 +104,20 @@ public class ImageFacadeREST extends AbstractFacade<Image> {
     @GET
     @Path("getLike/{id}")
     public int getLike(@PathParam("id") Integer id)    {
-        User user = em.find(User.class, id);
-        return user.getImageCollection1().size();
+        return super.find(id).getUserCollection().size();
+    }
+    
+    @GET
+    @Path("getLikeTest/{id}")
+    public List<User> getLikeTest(@PathParam("id") Integer id)    {
+        return (List<User>) super.find(id).getUserCollection();
+    }
+    
+    @POST
+    @Path("submitLike/{uid}/{iid}")
+    public void submitLike(@PathParam("uid") Integer uid, @PathParam("iid") Integer iid)    {
+        super.find(iid).getUserCollection().add(em.find(User.class, uid));
+        em.find(User.class, uid).getImageCollection().add(super.find(iid));
     }
 
     @PUT

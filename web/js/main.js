@@ -36,8 +36,21 @@ $(document).on('click', '.photo-box', function(){
         });
     });
     //Display the likes
-    $.get();
+    $.get("http://192.168.56.1:8080/ImageSharing/webresources/model.image/getLike/"+IID, function (response) {
+        $('#likes').html('<p>'+response+' Likes</p>');        
+    });
     
+    //Like an image
+    $('#submitLike').click(function(){
+    $.ajax({
+            type: "POST",
+            url: "http://192.168.56.1:8080/ImageSharing/webresources/model.image/submitLike/" + localStorage.getItem("UID")+"/"+IID,
+            success: function (response) {
+                location.reload();
+            }
+        });
+    });
+    //Add comment
     $('#submitComment').click(function(){
         var commentInput = $('#commentInput').val();
         $.ajax({
