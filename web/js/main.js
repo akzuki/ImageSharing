@@ -100,6 +100,7 @@ $(document).ready(function () {
     //Search function
     $('#searchButton').click(function (e) {
         e.preventDefault();
+        $('#searchResultText').html('<p>Search images by '+"'"+$('#searchInput').val()+"'");
         displayImages("webresources/model.image/search/" + $('#searchInput').val());
     });
 
@@ -205,9 +206,11 @@ $(document).ready(function () {
                 data.tag = [data.tag];
             }
             $('#tags').empty();
+            var tags="";
             $.each(data.tag, function (index, value) {
-                $('#tags').append(value.tagname + " ");
+                tags += "#"+value.tagname+" ";
             });
+            $('#tags').html('<p>Tags: '+tags+'</p>');
         });
 
         //Display the comments

@@ -233,8 +233,8 @@
                     <div id="description">
                         <p>Description: </p>
                     </div>
-                    <p>Tags: </p>
                     <div id="tags">                        
+                        <p>Tags: </p>
                     </div>
                     <p>Comments: </p>
                     <div id="comments">
@@ -247,8 +247,10 @@
                     <div class="form-group">
                         <label for="comment">Comment:</label>
 
-                        <input type="text" id="commentInput">
-                        <button type="submit" id="submitComment">Submit</button>
+                        <!--<input type="text" required id="commentInput">-->
+                        <textarea class="form-control" rows="2"  id="commentInput"></textarea>
+                        <!--<input type="submit" id="submitComment">-->
+                        <button type="submit" class="btn btn-default" id="submitComment">Submit</button>
                     </div>
 
 
@@ -273,7 +275,7 @@
 
         <section id="gallery" class="photo-container">
             <div class="container">
-                <p>Latest photos</p>
+                <p id="searchResultText">Latest photos</p>
                 <div class="row">
                     <div id="image-feed">
                         <!-- The following HTML will be our template inside instafeed -->

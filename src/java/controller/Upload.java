@@ -69,13 +69,16 @@ public class Upload extends HttpServlet {
             } else {                
                 tag = (Tag) em.createNamedQuery("Tag.findByTagname").setParameter("tagname", tagInput).getSingleResult();
             }
-            ArrayList<Image> listImage = new ArrayList();
-            listImage.add(img);
-            tag.setImageCollection(listImage);
+//            ArrayList<Image> listImage = new ArrayList();
+//            listImage.add(img);
+//            tag.setImageCollection(listImage);
+            
+            tag.getImageCollection().add(img);
+            img.getTagCollection().add(tag);
 
-            ArrayList<Tag> listTag = new ArrayList();
-            listTag.add(tag);
-            img.setTagCollection(listTag);
+//            ArrayList<Tag> listTag = new ArrayList();
+//            listTag.add(tag);
+//            img.setTagCollection(listTag);
 
             //img.getTagCollection()
             em.merge(img);
