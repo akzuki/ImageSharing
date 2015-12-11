@@ -49,7 +49,7 @@ public class ImageFacadeREST extends AbstractFacade<Image> {
     @Path("search/{input}")
     @Produces({"application/xml", "application/json"})
     public List<Image> searchImage(@PathParam("input") String input) {
-        User user = (User) em.createNamedQuery("User.findByUname").setParameter("uname", input).getSingleResult();
+        User user = (User) em.createNamedQuery("User.findByUname").setParameter("uname", input).getResultList().get(0);
         return (List<Image>) user.getImageCollection1();
     }
 

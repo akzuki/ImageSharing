@@ -248,6 +248,7 @@ $(document).ready(function () {
         $('#imagemodal').modal('show');
     });
 
+    //Comment button
     $('#submitComment').click(function (e) {
         var commentInput = $('#commentInput').val();
         var IID = $('#imagepreview').attr('iid');
@@ -266,6 +267,7 @@ $(document).ready(function () {
         });
     });
 
+    //Like button
     $('#submitLike').click(function (e) {
         e.stopPropagation();
         if (localStorage.getItem("checkUserLogin") == null) {

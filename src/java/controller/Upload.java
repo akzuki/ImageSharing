@@ -56,6 +56,8 @@ public class Upload extends HttpServlet {
             int uid = Integer.parseInt(request.getParameter("userID"));
             User user = em.find(User.class, uid);
             img.setUid(user);
+            
+            user.getImageCollection1().add(img);
 
             Date date = new Date();
             img.setItime(date);
