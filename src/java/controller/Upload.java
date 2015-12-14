@@ -63,26 +63,24 @@ public class Upload extends HttpServlet {
             img.setItime(date);
             //Set tag
             String tagInput = request.getParameter("tagInput");
-            Tag tag = new Tag();
-            if (em.createNamedQuery("Tag.findByTagname").setParameter("tagname", tagInput).getResultList().size() == 0) {
+            Tag tag = new Tag();            
+            if (em.createNamedQuery("Tag.findByTagname").setParameter("tagname", tagInput).getResultList().isEmpty()) {
                 tag.setTagname(request.getParameter("tagInput"));
+                em.persist(tag);
+                transaction.commit();
             } else {                
                 tag = (Tag) em.createNamedQuery("Tag.findByTagname").setParameter("tagname", tagInput).getSingleResult();
+                transaction.commit();
             }
-//            ArrayList<Image> listImage = new ArrayList();
-//            listImage.add(img);
-//            tag.setImageCollection(listImage);
             
-            tag.getImageCollection().add(img);
+            transaction.begin();
+            em = emf.createEntityManager();
             img.getTagCollection().add(tag);
+            tag.getImageCollection().add(img);
 
-//            ArrayList<Tag> listTag = new ArrayList();
-//            listTag.add(tag);
-//            img.setTagCollection(listTag);
-
-            //img.getTagCollection()
             em.merge(img);
-            //em.getTransaction().commit();
+            em.merge(tag);
+
             transaction.commit();
             out.println(img.getPath());
             request.getPart("file").write(path);

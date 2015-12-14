@@ -39,6 +39,12 @@ public class TagFacadeREST extends AbstractFacade<Tag> {
     public void create(Tag entity) {
         super.create(entity);
     }
+    
+    @GET
+    @Path("getTagname/{input}")
+    public String getTagname(@PathParam("input") Integer id) {
+        return super.find(id).getTagname();
+    }
 
     @PUT
     @Path("{id}")

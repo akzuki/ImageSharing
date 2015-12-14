@@ -45,13 +45,20 @@ public class ImageFacadeREST extends AbstractFacade<Image> {
         super.create(entity);
     }
 
-//    @GET
-//    @Path("search/{input}")
-//    @Produces({"application/xml", "application/json"})
-//    public List<Image> searchImage(@PathParam("input") String input) {
-//        User user = (User) em.createNamedQuery("User.findByUname").setParameter("uname", input).getResultList().get(0);
-//        return (List<Image>) user.getImageCollection1();
-//    }
+    @GET
+    @Path("searchByUserID/{input}")
+    @Produces({"application/xml", "application/json"})
+    public List<Image> searchImageByUserID(@PathParam("input") Integer id) {
+        return (List<Image>) em.find(User.class, id).getImageCollection1();
+    }
+    
+    @GET
+    @Path("searchByTagID/{input}")
+    @Produces({"application/xml", "application/json"})
+    public List<Image> searchImageByTagID(@PathParam("input") Integer id) {
+        return (List<Image>) em.find(Tag.class, id).getImageCollection();
+    }
+
     @GET
     @Path("search/{input}")
     @Produces({"application/xml", "application/json"})
@@ -67,21 +74,12 @@ public class ImageFacadeREST extends AbstractFacade<Image> {
         }
         return resultList;
     }
-
+    
     @GET
-    @Path("searchByTag/{input}")
-    @Produces({"application/xml", "application/json"})
-    public List<Image> searchImageByTag(@PathParam("input") String input) {
-//        ArrayList<Image> listImage = new ArrayList<Image>();
-//        Tag tag = (Tag) em.createNamedQuery("Tag.findByTagname").setParameter("tagname", input).getSingleResult();
-//        for (Image img : findAll()) {
-//            if (img.getTagCollection().contains(tag)) {
-//                listImage.add(img);
-//            }
-//        }
-//        return listImage;
-        Tag tag = (Tag) em.createNamedQuery("Tag.findByTagname").setParameter("tagname", input).getSingleResult();
-        return (List<Image>) tag.getImageCollection();
+    @Path("getOwner/{id}")
+    @Produces("text/plain")
+    public String getOwner(@PathParam("id") Integer id) {
+        return super.find(id).getUid().getUname();
     }
 
     @GET

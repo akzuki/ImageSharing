@@ -54,6 +54,12 @@ public class UserFacadeREST extends AbstractFacade<User> {
         return msg;
     }
     
+    @GET
+    @Path("getUsername/{input}")
+    public String getUsername(@PathParam("input") Integer id) {
+        return super.find(id).getUname();
+    }
+    
     @POST
     @Path("signUp/{username}/{password}/{email}")
     //@Consumes(MediaType.APPLICATION_FORM_URLENCODED)

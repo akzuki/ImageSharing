@@ -13,7 +13,8 @@
         <!--    Main CSS-->
         <link rel="stylesheet" href="css/main.css">
         <!--    Custom Fonts-->
-
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link href='http://fonts.googleapis.com/css?family=Lato:400,700|Kaushan+Script|Montserrat' rel='stylesheet' type='text/css'>
         <!--    Javascript-->
         <script src="js/jquery-2.1.4.min.js"></script>
         <script src="js/bootstrap/bootstrap.min.js"></script>
@@ -22,7 +23,7 @@
     </head>
 
     <body>
-
+        <!--Navigation bar-->
         <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -57,7 +58,8 @@
             </div>
         </nav>
 
-        <div class="modal fade" id="myMod2" tabindex="-1" role="dialog">
+        <!--Upload form-->
+        <div class="modal fade" id="uploadForm" tabindex="-1" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -73,7 +75,7 @@
                                         for="tag">Tag</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control"
-                                           id="tagInput" name="tagInput" placeholder="Tag"/>
+                                           id="tagInput" name="tagInput" placeholder="Tag" required/>
                                 </div>
                             </div>
 
@@ -83,7 +85,7 @@
                                         for="des">Description</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control"
-                                           id="desInput" name="desInput" placeholder="Description"/>
+                                           id="desInput" name="desInput" placeholder="Description" required/>
                                 </div>
                             </div>
 
@@ -92,7 +94,7 @@
                                     <div class="input-group">
                                         <span class="input-group-btn">
                                             <span class="btn btn-default btn-file">
-                                                Browse <input type="file" name="file">
+                                                Browse <input type="file" name="file" required>
                                             </span>
                                         </span>
                                         <input id="input-image" type="text" class="form-control" readonly>
@@ -110,7 +112,8 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-        <div class="modal fade" id="myMod1" tabindex="-1" role="dialog">
+        <!--Sign up form-->
+        <div class="modal fade" id="signUpForm" tabindex="-1" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -124,27 +127,27 @@
                             <div class="form-group required">
                                 <label class="col-sm-2 control-label" for="inputEmail3">Username</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputUsernameSignup" name="username" placeholder="Username" />
+                                    <input type="text" class="form-control" id="inputUsernameSignup" name="username" placeholder="Username" required />
                                 </div>
                             </div>
                             <div class="form-group required">
                                 <label class="col-sm-2 control-label" for="inputPassword3">Password</label>
                                 <div class="col-sm-10">
-                                    <input type="password" class="form-control" id="inputPasswordSignup" name="password" placeholder="Password" />
+                                    <input type="password" class="form-control" id="inputPasswordSignup" name="password" placeholder="Password" required/>
                                 </div>
                             </div>
 
                             <div class="form-group required">
                                 <label class="col-sm-2 control-label" for="inputPassword3">Confirm Password</label>
                                 <div class="col-sm-10">
-                                    <input type="password" class="form-control" id="inputPassword3" placeholder="Password" />
+                                    <input type="password" class="form-control" id="inputPassword3" placeholder="Password" required/>
                                 </div>
                             </div>
 
                             <div class="form-group required">
                                 <label class="col-sm-2 control-label" for="inputEmail3">Email</label>
                                 <div class="col-sm-10">
-                                    <input type="email" class="form-control" id="inputEmailSignup" name="email" placeholder="Email" />
+                                    <input type="email" class="form-control" id="inputEmailSignup" name="email" placeholder="Email" required />
                                 </div>
                             </div>
 
@@ -165,7 +168,8 @@
         </div>
         <!-- /.modal -->
 
-        <div class="modal fade" id="myMod" tabindex="-1" role="dialog">
+        <!--Log in form-->
+        <div class="modal fade" id="signInForm" tabindex="-1" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -179,13 +183,13 @@
                             <div class="form-group required">
                                 <label class="col-sm-2 control-label" for="inputEmail3">Username</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputUsernameLogin" placeholder="Username" />
+                                    <input type="text" class="form-control" id="inputUsernameLogin" placeholder="Username" required />
                                 </div>
                             </div>
                             <div class="form-group required">
                                 <label class="col-sm-2 control-label" for="inputPassword3">Password</label>
                                 <div class="col-sm-10">
-                                    <input type="password" class="form-control" id="inputPasswordLogin" placeholder="Password" />
+                                    <input type="password" class="form-control" id="inputPasswordLogin" placeholder="Password" required/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -199,7 +203,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <button class="btn btn-default" id="logInButton">Sign in</button>
+                                    <button type="Submit" class="btn btn-default" id="logInButton">Sign in</button>
                                 </div>
                             </div>
                         </form>
@@ -214,6 +218,7 @@
         </div>
         <!-- /.modal -->
 
+        <!--Image form-->
         <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -224,26 +229,29 @@
                     <div class="modal-body">
                         <img src="" id="imagepreview" style="width: 100%;" >
                     </div>
+                   
                     <div style="float:left;margin-right:7px">
+                        
                         <button id="submitLike">Like</button>
                     </div>
                     <div id="likes" >
                         <p>5 likes</p>
                     </div>
+                     <div id="owner"><p>Uploaded by: </p></div>
                     <div id="description">
                         <p>Description: </p>
                     </div>
                     <div id="tags">                        
                         <p>Tags: </p>
                     </div>
+                    <div id="linkImage">                        
+                        <p>Link: </p>
+                    </div>
                     <p>Comments: </p>
                     <div id="comments">
                         <ul id="listComments">
                         </ul>
                     </div>
-
-
-
                     <div class="form-group">
                         <label for="comment">Comment:</label>
 
@@ -251,10 +259,7 @@
                         <textarea class="form-control" rows="2"  id="commentInput"></textarea>
                         <!--<input type="submit" id="submitComment">-->
                         <button type="submit" class="btn btn-default" id="submitComment">Submit</button>
-                    </div>
-
-
-
+                    </div>                
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
@@ -265,20 +270,18 @@
         <header>
             <div class="header-content">
                 <div class="header-content-inner">
-                    <h1>Please work</h1>
-                    <p>Something else goes here</p>
-                    <button id="workpls">Work</button>
-                    <button id="workpls2">Work2</button>
+                    <h1>A good snapshot keeps a moment from running away.</h1>
                 </div>
             </div>
         </header>
 
+        <!--Image gallery-->
         <section id="gallery" class="photo-container">
             <div class="container">
                 <p id="searchResultText">Latest photos</p>
                 <div class="row">
                     <div id="image-feed">
-                        <!-- The following HTML will be our template inside instafeed -->
+                        <!--The following HTML will be replaced when running-->
                         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="photo-box">
                                 <div class="image-wrap">
